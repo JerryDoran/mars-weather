@@ -105,11 +105,19 @@ function displayDate(date) {
 }
 
 function displayTemperature(temp) {
-  return Math.round(temp);
+  let returnTemp = temp;
+  if (!isMetric()) {
+    returnTemp = (temp * 9) / 5 + 32;
+  }
+  return Math.round(returnTemp);
 }
 
 function displaySpeed(speed) {
-  return Math.round(speed);
+  let returnSpeed = speed;
+  if (!isMetric()) {
+    returnSpeed = speed / 1.609;
+  }
+  return Math.round(returnSpeed);
 }
 
 function updateUnits() {
@@ -135,6 +143,20 @@ getWeather().then(sols => {
     let metricUnits = !isMetric();
     cel.checked = metricUnits;
     fah.checked = !metricUnits;
+    displaySelectedSol(sols);
+    displayPreviousSols(sols);
+    updateUnits();
+  });
+
+  cel.addEventListener('change', () => {
+    displaySelectedSol(sols);
+    displayPreviousSols(sols);
+    updateUnits();
+  });
+
+  fah.addEventListener('change', () => {
+    displaySelectedSol(sols);
+    displayPreviousSols(sols);
     updateUnits();
   });
 });
