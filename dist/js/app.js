@@ -33,16 +33,17 @@ function getWeather() {
   return fetch(API_URL)
     .then(res => res.json())
     .then(data => {
+      console.log(data);
       // Destructure the data into multiple variables
       const { sol_keys, validity_checks, ...solData } = data;
       const temp = Object.entries(solData).map(([sol, data]) => {
         return {
           sol: sol,
-          maxTemp: data.AT.mx,
-          minTemp: data.AT.mn,
-          windSpeed: data.HWS.av,
-          windDirectionDegrees: data.WD.most_common.compass_degrees,
-          windDirectionCardinal: data.WD.most_common.compass_point,
+          maxTemp: data.PRE.mx,
+          minTemp: data.PRE.mn,
+          windSpeed: data.PRE.av,
+          // windDirectionDegrees: data.WD.most_common.compass_degrees,
+          // windDirectionCardinal: data.WD.most_common.compass_point,
           date: new Date(data.First_UTC)
         };
       });
